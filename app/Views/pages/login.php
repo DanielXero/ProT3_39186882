@@ -2,6 +2,18 @@
 
 <section class="py-5">
   <div class="container">
+     <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <?= session()->getFlashdata('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <?= session()->getFlashdata('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
     <div class="row justify-content-center">
       <div class="col-lg-5 col-md-7">
         <div class="card shadow">

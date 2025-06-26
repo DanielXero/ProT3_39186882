@@ -1,7 +1,18 @@
-
 <!-- Registro -->
 <section class="py-5">
     <div class="container">
+        <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <?= session()->getFlashdata('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <?= session()->getFlashdata('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card shadow">
@@ -11,35 +22,68 @@
                             <p class="text-muted">Únete a la comunidad ZhenNova</p>
                         </div>
 
-                        <form id="registerForm">
+                        <form method="POST" action="<?= base_url('registro'); ?>" id="registerForm">
+                            <?= csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" required>
+                                    <input type="text" class="form-control <?= session('errors.nombre') ? 'is-invalid' : '' ?>"
+                                        id="nombre" name="nombre" value="<?= old('nombre') ?>" required>
+                                    <?php if (session('errors.nombre')): ?>
+                                        <div class="invalid-feedback">
+                                            <?= session('errors.nombre') ?>
+                                        </div>
+                                    <?php endif ?>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="apellido" class="form-label">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" required>
+                                    <input type="text" class="form-control <?= session('errors.apellido') ? 'is-invalid' : '' ?>"
+                                        id="apellido" name="apellido" value="<?= old('apellido') ?>" required>
+                                    <?php if (session('errors.apellido')): ?>
+                                        <div class="invalid-feedback">
+                                            <?= session('errors.apellido') ?>
+                                        </div>
+                                    <?php endif ?>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Ingresa un correo válido" required>
+                                <input type="email" class="form-control <?= session('errors.email') ? 'is-invalid' : '' ?>"
+                                    id="email" name="email" value="<?= old('email') ?>" required>
+                                <?php if (session('errors.email')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= session('errors.email') ?>
+                                    </div>
+                                <?php endif ?>
                             </div>
 
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" pattern="\d{7,15}" title="Solo números, entre 7 y 15 dígitos" required>
+                                <input type="tel" class="form-control <?= session('errors.telefono') ? 'is-invalid' : '' ?>"
+                                    id="telefono" name="telefono" value="<?= old('telefono') ?>" required>
+                                <?php if (session('errors.telefono')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= session('errors.telefono') ?>
+                                    </div>
+                                <?php endif ?>
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}" title="Mínimo 8 caracteres, una mayúscula, una minúscula y un número" required>
+                                    <input type="password"
+                                        class="form-control <?= session('errors.password') ? 'is-invalid' : '' ?>"
+                                        id="password"
+                                        name="password"
+                                        value="<?= old('password') ?>"
+                                        required>
                                     <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
+                                    <?php if (session('errors.password')): ?> <div class="invalid-feedback">
+                                            <?= session('errors.password') ?> </div>
+                                    <?php endif ?>
                                 </div>
 
                             </div>
@@ -47,15 +91,20 @@
                             <div class="mb-3">
                                 <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                    <input type="password"
+                                        class="form-control <?= session('errors.confirmPassword') ? 'is-invalid' : '' ?>"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        value="<?= old('confirmPassword') ?>"
+                                        required>
                                     <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword')">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
+                                    <?php if (session('errors.confirmPassword')): ?> <div class="invalid-feedback">
+                                            <?= session('errors.confirmPassword') ?> </div>
+                                    <?php endif ?>
 
-                                </div>
-                                <div class="invalid-feedback" id="confirmPasswordError">
-                                    Las contraseñas no coinciden.
-                                </div>
+                                </div>                                
                             </div>
 
 
@@ -63,10 +112,16 @@
 
 
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="terminos" required>
+                                <input type="checkbox" class="form-check-input <?= session('errors.terminos') ? 'is-invalid' : '' ?>"
+                                    id="terminos" name="terminos" value="1" <?= old('terminos') ? 'checked' : '' ?> required>
                                 <label class="form-check-label" for="terminos">
                                     Acepto los <a href="<?= site_url('/terminos-y-condiciones') ?>" class="text-primary">Términos y Condiciones</a>
                                 </label>
+                                <?php if (session('errors.terminos')): ?>
+                                    <div class="invalid-feedback d-block">
+                                        <?= session('errors.terminos') ?>
+                                    </div>
+                                <?php endif ?>
                             </div>
 
 
@@ -90,7 +145,7 @@
             </div>
         </div>
 
-        
+
         <!-- Modal de éxito -->
         <!-- <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -108,6 +163,6 @@
                 </div>
             </div>
         </div> -->
-        
+
     </div>
 </section>
