@@ -72,7 +72,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">Iniciar Sesión</button>
+                                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">Registrarse</button>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <button type="reset" class="btn btn-danger w-100 btn-lg mb-3">Cancelar</button>
@@ -89,8 +89,10 @@
                 </div>
             </div>
         </div>
+
+        
         <!-- Modal de éxito -->
-        <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -105,6 +107,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+        
     </div>
 </section>
