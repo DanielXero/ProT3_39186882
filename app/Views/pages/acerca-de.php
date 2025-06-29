@@ -1,4 +1,6 @@
+<?php echo $this->extend('layouts/main-layout'); ?>
 
+<?php echo $this->section('content'); ?>
 <!-- Acerca De -->
 <section class="section-acercade">
         <div class="container">
@@ -126,4 +128,4 @@
 
 
 
-
+<?php echo $this->endSection(); ?>

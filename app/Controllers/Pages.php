@@ -11,12 +11,9 @@ class Pages extends Controller
      */
     public function index()
     {
-        // Pasamos un título dinámico a la vista
-        $data['title'] = 'Inicio';
-
-        return view('templates/header', $data) .
-            view('pages/home') .
-            view('templates/footer');
+         $data['title'] = 'Inicio';
+        // Ahora solo se retorna la vista que extiende el layout base
+        return view('pages/home', $data);
     }
 
     /**
@@ -24,11 +21,8 @@ class Pages extends Controller
      */
     public function acercaDe()
     {
-        $data['title'] = 'Acerca de Nosotros';
-
-        return view('templates/header', $data) .
-            view('pages/acerca-de') .
-            view('templates/footer');
+       $data['title'] = 'Acerca de Nosotros';
+        return view('pages/acerca-de', $data);
     }
 
     /**
@@ -36,46 +30,17 @@ class Pages extends Controller
      */
     public function quienesSomos()
     {
-        $data['title'] = '¿Quiénes Somos?';
-
-        return view('templates/header', $data) .
-            view('pages/quienes-somos') .
-            view('templates/footer');
+       $data['title'] = '¿Quiénes Somos?';
+        return view('pages/quienes-somos', $data);
     }
 
-    /**
-     * Muestra el formulario de login
-     */
-    public function login()
-    {
-        $data['title'] = 'Iniciar Sesión';
-
-        return view('templates/header', $data) .
-            view('pages/login') .
-            view('templates/footer');
-    }
-
-    /**
-     * Muestra el formulario de registro
-     */
-    public function registro()
-    {
-        $data['title'] = 'Registrarse';
-
-        return view('templates/header', $data) .
-            view('pages/registro') .
-            view('templates/footer');
-    }
 
         /**
-     * Muestra el formulario de registro
+     * Muestra la página de terminos y condiciones
      */
     public function terminosCondiciones()
     {
         $data['title'] = 'Terminos y Condiciones';
-
-        return view('templates/header', $data) .
-            view('pages/terminos-y-condiciones') .
-            view('templates/footer');
+        return view('pages/terminos-y-condiciones', $data);
     }
 }

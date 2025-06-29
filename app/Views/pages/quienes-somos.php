@@ -1,3 +1,8 @@
+
+<?php echo $this->extend('layouts/main-layout'); ?>
+
+<?php echo $this->section('content'); ?>
+
 <!--  Quienes Somos -->
 <section class="section-team">
   <div class="container">
@@ -72,6 +77,10 @@
 
 
   </div>
-</section> 
+</section>
+
+
+<!-- Fin del contenido original -->
+<?php echo $this->endSection(); ?>
 
 

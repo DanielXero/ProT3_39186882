@@ -1,3 +1,7 @@
+
+<?php echo $this->extend('layouts/main-layout'); ?>
+
+<?php echo $this->section('content'); ?>
 <!-- Terminos y Condiciones -->
 <section class="container py-5  terminos">
   <div class="text-center mb-4">
@@ -79,3 +83,6 @@
 
   </div>
 </section>
+
+<!-- Fin del contenido original -->
+<?php echo $this->endSection(); ?>

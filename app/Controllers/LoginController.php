@@ -2,14 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\UsuarioModel; // Asegúrate de importar tu modelo de usuario
-use CodeIgniter\Database\Exceptions\DatabaseException; // Para un manejo más específico de errores de BD
+use App\Models\UsuarioModel;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class LoginController extends BaseController
 {
     public function __construct()
     {
-        // Cargar el helper 'form' para funciones relacionadas con formularios
+
         helper(['form', 'url']);
     }
 
@@ -19,18 +19,16 @@ class LoginController extends BaseController
      */
     public function index()
     {
-        // Si el usuario ya está logueado (sesión activa), redirigirlo para evitar que vea el login de nuevo
+        
         if (session()->get('isLoggedIn')) {
-            // Asumiendo que rediriges a 'dashboard' o a alguna otra página principal del usuario
+
             return redirect()->to('/dashboard');
         }
 
-        $data['title'] = 'Iniciar Sesión'; // Título para la vista
 
-        // Cargar la vista del formulario de login
-        return view('templates/header', $data) .
-               view('pages/login') . // Necesitarás crear esta vista
-               view('templates/footer');
+        $data['title'] = 'Iniciar Sesión';
+        // Ahora solo retorna la vista que extiende el layout base
+        return view('pages/login', $data);
     }
 
     /**
@@ -94,16 +92,13 @@ class LoginController extends BaseController
                 // Establecer un mensaje flash de éxito
                 session()->setFlashdata('success', '¡Bienvenido de nuevo, ' . $usuario['nombre'] . '!');
 
-                // Redirigir al usuario al dashboard o a la página principal
-                // Puedes usar condicionales aquí para redirigir según el rol_id
-                return redirect()->to('/'); // Asegúrate de tener una ruta para '/dashboard'
 
+                return redirect()->to('/');
             } else {
                 // 6. Credenciales inválidas
                 session()->setFlashdata('error', 'Email o contraseña incorrectos.');
                 return redirect()->back()->withInput(); // Vuelve al login con los datos
             }
-
         } catch (DatabaseException $e) {
             // Captura errores específicos de la base de datos
             log_message('error', 'Error de base de datos durante el login: ' . $e->getMessage());
@@ -125,10 +120,10 @@ class LoginController extends BaseController
         // Destruir todos los datos de la sesión
         session()->destroy();
 
-        // Establecer un mensaje flash de éxito
+
         session()->setFlashdata('success', 'Has cerrado sesión correctamente.');
 
-        // Redirigir al usuario a la página de login o a la página principal
+
         return redirect()->to('/login');
     }
 }

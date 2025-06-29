@@ -14,11 +14,9 @@ class UsuarioController extends BaseController
 
     public function index()
     {
-        $data['title'] = 'Registrarse';
-
-        return view('templates/header', $data) .
-            view('pages/registro') .
-            view('templates/footer');
+       $data['title'] = 'Registrarse';
+        // Ahora solo retorna la vista que extiende el layout base
+        return view('pages/registro', $data);
     }
 
     public function crear()
@@ -96,11 +94,10 @@ class UsuarioController extends BaseController
                 // Registro exitoso
                 // Establecer un mensaje flash de éxito para mostrar en la siguiente petición
                 session()->setFlashdata('success', '¡Tu cuenta ha sido creada con éxito! Ahora puedes iniciar sesión.');
-                // Redirigir al usuario a una página de inicio de sesión o un dashboard
-                return redirect()->to('/login'); // Asegúrate de que tengas una ruta '/login'
+                
+                return redirect()->to('/login'); 
             } else {
-                // Esto es un error inesperado, ya que la validación pasó, pero el insert falló
-                // Puede ocurrir por problemas de base de datos no capturados por la validación inicial
+                
                 session()->setFlashdata('error', 'Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.');
                 return redirect()->back()->withInput();
             }

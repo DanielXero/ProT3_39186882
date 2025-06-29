@@ -1,3 +1,7 @@
+<?php echo $this->extend('layouts/main-layout'); ?>
+
+<?php echo $this->section('content'); ?>
+
 <!-- Login -->
 
 <section class="py-5">
@@ -87,3 +91,7 @@
   </div>
 
 </section>
+
+
+<!-- Fin del contenido original -->
+<?php echo $this->endSection(); ?>

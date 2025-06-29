@@ -1,4 +1,6 @@
+<?php echo $this->extend('layouts/main-layout'); ?>
 
+<?php echo $this->section('content'); ?>
   <!-- Inicio -->
   <h1 class="hero-title">Bienvenido a ZhenNova</h1>
 
@@ -79,3 +81,6 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
     </div>
+
+<!-- Fin del contenido original -->
+<?php echo $this->endSection(); ?>
