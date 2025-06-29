@@ -40,10 +40,10 @@
                 <a class="nav-link" href="<?= site_url('/') ?>">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<?= site_url('/acerca-de') ?>">Acerca de</a>
+                <a class="nav-link text-nowrap" href="<?= site_url('/acerca-de') ?>">Acerca de</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<?= site_url('/quienes-somos') ?>">Quiénes Somos</a>
+                <a class="nav-link text-nowrap" href="<?= site_url('/quienes-somos') ?>">Quiénes Somos</a>
               </li>
             </ul>
 
@@ -65,14 +65,41 @@
 
             <!-- Grupo derecho -->
             <ul class="navbar-nav ms-auto mt-4 mt-lg-0">
-              <li class="nav-item me-3">
 
-                <a class="btn btn-outline-light" href="<?= site_url('/login') ?>"> <i class="bi bi-person"></i> Ingresar</a>
-              </li>
-              <li class="nav-item ">
 
-                <a class="btn btn-outline-light" href="<?= site_url('/registro') ?>"> <i class="bi bi-person"></i> Registrarse</a>
-              </li>
+              <?php if (session()->get('isLoggedIn')): ?>
+                <li class="nav-item me-3">
+                  <?php
+                  $rol_id = session()->get('rol_id');
+                  $nombre_usuario = session()->get('nombre');
+                  $apellido_usuario = session()->get('apellido');
+                  $rol_descripcion = ''; // Por defecto
+                  $dashboard_link = '';
+
+                  if ($rol_id == 1) { // Admin
+                    $rol_descripcion = 'Admin';
+                    $dashboard_link = site_url('/admin/dashboard');
+                  } else { // Cliente
+                    $rol_descripcion = 'Cliente';
+                    $dashboard_link = site_url('/client/dashboard');
+                  }
+                  ?>
+                  <a class="btn btn-outline-light ms-3 text-nowrap" href="<?= $dashboard_link ?>">
+                    <i class="bi bi-person-circle me-1"></i>
+                    <?= esc($rol_descripcion) ?>: <?= esc($nombre_usuario) ?> <?= esc($apellido_usuario) ?>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-outline-light text-nowrap" href="<?= site_url('/logout') ?>"> <i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
+                </li>
+              <?php else: ?>
+                <li class="nav-item me-3">
+                  <a class="btn btn-outline-light" href="<?= site_url('/login') ?>"> <i class="bi bi-person"></i> Ingresar</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="btn btn-outline-light" href="<?= site_url('/registro') ?>"> <i class="bi bi-person"></i> Registrarse</a>
+                </li>
+              <?php endif; ?>
             </ul>
           </div>
         </div>
