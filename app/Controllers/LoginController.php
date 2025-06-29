@@ -70,27 +70,27 @@ class LoginController extends BaseController
             $usuario = $usuarioModel->where('email', $email)->first(); //
 
             // Verificar si el usuario existe y si la contraseña es correcta
-            if ($usuario && password_verify($password, $usuario['password'])) {
+            if ($usuario && password_verify($password, $usuario->password)) {
                 // Verificar si el usuario no está dado de baja (si 'baja' = 0 significa activo)
                 // Usamos 0 para activo y 1 para dado de baja, como se definió en el controlador de registro.
-                if ($usuario['baja'] == 1) { //
+                if ($usuario->baja == 1) { //
                     session()->setFlashdata('error', 'Tu cuenta ha sido desactivada. Contacta al administrador.');
                     return redirect()->back()->withInput();
                 }
 
                 // 5. Autenticación exitosa: Establecer la sesión del usuario
                 $sessionData = [
-                    'id_usuario' => $usuario['id_usuario'], //
-                    'nombre'     => $usuario['nombre'], //
-                    'apellido'   => $usuario['apellido'], //
-                    'email'      => $usuario['email'], //
-                    'rol_id'     => $usuario['rol_id'], //
+                    'id_usuario' => $usuario->id_usuario,
+                    'nombre'     => $usuario->nombre, 
+                    'apellido'   => $usuario->apellido, 
+                    'email'      => $usuario->email, 
+                    'rol_id'     => $usuario->rol_id, 
                     'isLoggedIn' => true,
                 ];
                 session()->set($sessionData); // Guarda los datos en la sesión
 
                 // Establecer un mensaje flash de éxito
-                session()->setFlashdata('success', '¡Bienvenido de nuevo, ' . $usuario['nombre'] . '!');
+                session()->setFlashdata('success', '¡Bienvenido de nuevo, ' . $usuario->nombre . '!');
 
 
                 return redirect()->to('/');

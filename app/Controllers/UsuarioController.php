@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controllers;
-Use App\Models\UsuarioModel;
+
+use App\Models\UsuarioModel;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class UsuarioController extends BaseController
@@ -14,7 +15,7 @@ class UsuarioController extends BaseController
 
     public function index()
     {
-       $data['title'] = 'Registrarse';
+        $data['title'] = 'Registrarse';
         // Ahora solo retorna la vista que extiende el layout base
         return view('pages/registro', $data);
     }
@@ -83,10 +84,10 @@ class UsuarioController extends BaseController
                 'apellido'   => $this->request->getPost('apellido'),
                 'email'      => $this->request->getPost('email'),
                 'telefono'   => $this->request->getPost('telefono'),
-                'password'   => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT), 
+                'password'   => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'rol_id'     => 2,
-                'baja'       => 0, 
-                
+                'baja'       => 0,
+
             ];
 
             // Insertar los datos en la base de datos
@@ -94,14 +95,15 @@ class UsuarioController extends BaseController
                 // Registro exitoso
                 // Establecer un mensaje flash de éxito para mostrar en la siguiente petición
                 session()->setFlashdata('success', '¡Tu cuenta ha sido creada con éxito! Ahora puedes iniciar sesión.');
-                
-                return redirect()->to('/login'); 
+                // Añadimos una bandera para que la vista sepa que debe mostrar el modal
+                session()->setFlashdata('show_registration_modal', true);
+
+                return redirect()->to('/login');
             } else {
-                
+
                 session()->setFlashdata('error', 'Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.');
                 return redirect()->back()->withInput();
             }
-
         } catch (DatabaseException $e) {
             // Capturar excepciones de la base de datos si ocurren durante el insert
             log_message('error', 'Error al insertar usuario: ' . $e->getMessage());
@@ -113,6 +115,5 @@ class UsuarioController extends BaseController
             session()->setFlashdata('error', 'Ocurrió un error inesperado al registrarte. Por favor, inténtalo más tarde.');
             return redirect()->back()->withInput();
         }
-    
     }
 }

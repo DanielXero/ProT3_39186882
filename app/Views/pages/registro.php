@@ -150,27 +150,63 @@
         </div>
 
 
-        <!-- Modal de éxito -->
-        <!-- <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="registroExitosoLabel">✅ Registro Exitoso</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ¡Bienvenido(a) a ZhenNova! Tu cuenta ha sido creada con éxito.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-                    </div>
-                </div>
+      <!-- Modal de Registro Exitoso -->
+<div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroExitosoLabel">✅ Registro Exitoso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div> -->
+            <div class="modal-body">
+                ¡Bienvenido(a) a ZhenNova! Tu cuenta ha sido creada con éxito.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="closeRegistrationModalBtn">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     </div>
 </section>
 
 
 <!-- Fin del contenido original -->
+<?php echo $this->endSection(); ?>
+
+<?php echo $this->section('page_js'); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+
+        // Mostrar el modal de registro exitoso si está presente en la sesión
+        const showRegistrationModal = <?= session()->getFlashdata('show_registration_modal') ? 'true' : 'false' ?>;
+
+        if (showRegistrationModal) {
+            
+            const modalElement = document.getElementById('registroExitosoModal');
+            const registroModal = new bootstrap.Modal(modalElement);
+            registroModal.show();
+
+            // Añadir listener para la redirección cuando el modal se cierre
+            modalElement.addEventListener('hidden.bs.modal', function (event) {
+                // Redirigir a la página de inicio
+                window.location.href = '<?= site_url('/') ?>';
+            });
+
+            
+            const closeButton = document.getElementById('closeRegistrationModalBtn');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    registroModal.hide(); // Esto disparará el evento 'hidden.bs.modal'
+                });
+            }
+        }
+
+        // Asegúrate de que las alertas se cierren automáticamente (si no está ya tu función)
+        // Si ya la tienes, solo asegúrate de que se llama aquí dentro del DOMContentLoaded
+        autoCloseAlerts('.alert-dismissible', 5000);
+    });
+</script>
 <?php echo $this->endSection(); ?>

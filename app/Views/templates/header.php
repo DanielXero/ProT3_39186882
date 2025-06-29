@@ -45,6 +45,13 @@
               <li class="nav-item">
                 <a class="nav-link text-nowrap" href="<?= site_url('/quienes-somos') ?>">Quiénes Somos</a>
               </li>
+              <!-- Nuevo enlace para Gestión de Usuarios (solo visible para admins) -->
+              <?php if (session()->get('isLoggedIn') && session()->get('rol_id') == 1): // Asumimos rol_id 1 es Admin 
+              ?>
+                <li class="nav-item">
+                  <a class="nav-link text-nowrap" href="<?= site_url('/usuarios') ?>">Gestión Usuarios</a>
+                </li>
+              <?php endif; ?>
             </ul>
 
             <!-- Formulario de búsqueda -->
