@@ -19,7 +19,7 @@ class LoginController extends BaseController
      */
     public function index()
     {
-        
+
         if (session()->get('isLoggedIn')) {
 
             return redirect()->to('/dashboard');
@@ -81,19 +81,25 @@ class LoginController extends BaseController
                 // 5. Autenticación exitosa: Establecer la sesión del usuario
                 $sessionData = [
                     'id_usuario' => $usuario->id_usuario,
-                    'nombre'     => $usuario->nombre, 
-                    'apellido'   => $usuario->apellido, 
-                    'email'      => $usuario->email, 
-                    'rol_id'     => $usuario->rol_id, 
+                    'nombre'     => $usuario->nombre,
+                    'apellido'   => $usuario->apellido,
+                    'email'      => $usuario->email,
+                    'rol_id'     => $usuario->rol_id,
                     'isLoggedIn' => true,
                 ];
                 session()->set($sessionData); // Guarda los datos en la sesión
 
+
                 // Establecer un mensaje flash de éxito
                 session()->setFlashdata('success', '¡Bienvenido de nuevo, ' . $usuario->nombre . '!');
+                // Redirección inteligente basada en el rol
+                if ($usuario->rol_id == 1) { // Asumiendo 1 es Admin
+                    return redirect()->to('/admin/dashboard');
+                } else { // Cualquier otro rol (ej: Cliente)
+                    return redirect()->to('/client/dashboard');
+                }
 
-
-                return redirect()->to('/');
+                
             } else {
                 // 6. Credenciales inválidas
                 session()->setFlashdata('error', 'Email o contraseña incorrectos.');

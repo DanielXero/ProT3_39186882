@@ -3,7 +3,7 @@
 <?php echo $this->section('content'); ?>
 
 <div class="container py-5">
-    <h1 class="mb-4 text-center">Editar Usuario</h1>
+    <h1 class="mb-4 text-center text-white">Editar Usuario</h1>
 
     <!-- Mensajes Flash -->
     <?php if (session()->getFlashdata('success')): ?>

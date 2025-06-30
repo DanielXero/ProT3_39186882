@@ -192,7 +192,7 @@
             // Añadir listener para la redirección cuando el modal se cierre
             modalElement.addEventListener('hidden.bs.modal', function (event) {
                 // Redirigir a la página de inicio
-                window.location.href = '<?= site_url('/') ?>';
+                window.location.href = '<?= site_url('/login') ?>';
             });
 
             
