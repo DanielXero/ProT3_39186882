@@ -41,7 +41,6 @@ app/
 public/                → Archivos accesibles: CSS, JS, imágenes
 writable/              → Logs, cache, archivos generados
 database/              → Exportación SQL
-vendor/                → Dependencias de Composer
 .gitignore             → Exclusión de archivos sensibles
 .env                   → Configuración de entorno
 ```
